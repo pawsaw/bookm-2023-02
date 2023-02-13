@@ -1,12 +1,13 @@
-export interface CounterProps {
-  value: number;
-  onValueChanged: (newValue: number) => void;
-}
+import { useCounter } from '../../domain/counter';
 
-export const Counter: React.FC<CounterProps> = ({ value, onValueChanged }) => {
-  const increment = () => {
-    onValueChanged(value + 1);
-  };
+export const Counter: React.FC = () => {
+  const { count, increment, decrement } = useCounter();
 
-  return <button onClick={increment}>{value}</button>;
+  return (
+    <div>
+      <button onClick={decrement}>-</button>
+      {count}
+      <button onClick={increment}>+</button>
+    </div>
+  );
 };

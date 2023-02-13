@@ -1,4 +1,6 @@
 import { Book } from '../../../domain/books';
+import { useCounter } from '../../../domain/counter';
+import { useTheme } from '../../../domain/theme/ThemeContext';
 
 export interface BookListItemProps {
   book: Book;
@@ -6,5 +8,20 @@ export interface BookListItemProps {
 }
 
 export const BookListItem: React.FC<BookListItemProps> = ({ book, onBookSelected }) => {
-  return <div onClick={() => onBookSelected(book)}>{book.title}</div>;
+  const { primaryColor } = useTheme();
+  const { count, increment } = useCounter();
+  return (
+    <>
+      BookListItem says: counter is: {count}
+      <button onClick={increment}>+</button>
+      <div
+        onClick={() => onBookSelected(book)}
+        style={{
+          color: primaryColor,
+        }}
+      >
+        {book.title}
+      </div>
+    </>
+  );
 };

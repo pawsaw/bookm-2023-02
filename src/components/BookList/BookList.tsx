@@ -1,4 +1,6 @@
 import { Book } from '../../domain/books';
+import { ThemeProvider } from '../../domain/theme/ThemeContext';
+import { Counter } from '../Counter';
 import { BookListItem } from './BookListItem/BookListItem';
 
 export interface BookListProps {
@@ -8,10 +10,22 @@ export interface BookListProps {
 
 export const BookList: React.FC<BookListProps> = ({ books, onBookSelected }) => {
   return (
-    <div>
-      {books.map((book) => (
-        <BookListItem key={book.title} book={book} onBookSelected={onBookSelected ?? (() => {})} />
-      ))}
-    </div>
+    <ThemeProvider
+      theme={{
+        primaryColor: 'green',
+        secondaryColor: 'red',
+      }}
+    >
+      <Counter />
+      <div>
+        {books.map((book) => (
+          <BookListItem
+            key={book.title}
+            book={book}
+            onBookSelected={onBookSelected ?? (() => {})}
+          />
+        ))}
+      </div>
+    </ThemeProvider>
   );
 };
