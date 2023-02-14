@@ -1,10 +1,13 @@
 import React, { CSSProperties } from 'react';
 import './index.css';
-import { Link, Switch, Route, Redirect } from 'react-router-dom';
+import { Link, Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import { BooksPage } from './pages/BooksPage';
 import { PlaygroundPage } from './pages/PlaygroundPage';
+import { BookDetailPage } from './pages/BookDetailPage';
 
 function App() {
+  const history = useHistory();
+
   return (
     <div style={styles.container}>
       <nav style={styles.navbar}>
@@ -18,7 +21,17 @@ function App() {
       <h1>Book Manager</h1>
       <div style={styles.content}>
         <Switch>
-          <Route path="/books" component={BooksPage} />
+          <Route path="/books/:isbn" component={BookDetailPage} />
+          <Route
+            path="/books"
+            render={() => (
+              <BooksPage
+                onBookSelected={(book) => {
+                  history.push(`/books/${book.isbn}`);
+                }}
+              />
+            )}
+          />
           <Route path="/playground" component={PlaygroundPage} />
           <Redirect to="/books" />
         </Switch>

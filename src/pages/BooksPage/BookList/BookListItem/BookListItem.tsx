@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Book } from '../../../../domain/books';
 import { useTheme } from '../../../../domain/theme/ThemeContext';
 
@@ -12,12 +13,21 @@ export const BookListItem: React.FC<BookListItemProps> = ({ book, onBookSelected
   return (
     <>
       <div
-        onClick={() => onBookSelected(book)}
+        // onClick={() => onBookSelected(book)}
         style={{
           color: primaryColor,
         }}
       >
-        {book.title}
+        {book.title} -{' '}
+        <a
+          href="#"
+          onClick={(event) => {
+            event.preventDefault();
+            onBookSelected(book);
+          }}
+        >
+          Details
+        </a>
       </div>
     </>
   );
