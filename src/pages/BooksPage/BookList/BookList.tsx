@@ -1,6 +1,6 @@
-import { Book } from '../../domain/books';
-import { ThemeProvider } from '../../domain/theme/ThemeContext';
-import { Counter } from '../Counter';
+import { Book } from '../../../domain/books';
+import { ThemeProvider } from '../../../domain/theme/ThemeContext';
+import { Counter } from '../../../components/Counter';
 import { BookListItem } from './BookListItem/BookListItem';
 
 export interface BookListProps {

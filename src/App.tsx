@@ -1,49 +1,57 @@
-import { useCallback, useEffect, useState } from 'react';
-import { BookList } from './components/BookList';
-import { Counter } from './components/Counter';
-import { Book, useBooks } from './domain/books';
-import { CounterProvider } from './domain/counter';
+import React, { CSSProperties } from 'react';
+import './index.css';
+import { Link, Switch, Route, Redirect } from 'react-router-dom';
+import { BooksPage } from './pages/BooksPage';
+import { PlaygroundPage } from './pages/PlaygroundPage';
 
 function App() {
-  // const book: Book | null = useBook('1001606140805');
-  const { books, reload } = useBooks();
-  useEffect(() => {
-    reload();
-  }, [reload]);
-
-  const [count, setCount] = useState(0);
-  const increment = useCallback(() => {
-    setCount((count) => count + 1);
-  }, []);
-  const decrement = useCallback(() => {
-    setCount((count) => count - 1);
-  }, []);
-
   return (
-    <CounterProvider
-      counter={{
-        count,
-        increment,
-        decrement,
-      }}
-    >
-      <div>
-        <h1>Book Manager</h1>
-        <button onClick={reload}>Reload books</button>
-        {books ? (
-          <BookList
-            books={books}
-            onBookSelected={(book) => {
-              alert(book.price);
-            }}
-          />
-        ) : (
-          <span>Loading books</span>
-        )}
-        {/* {book ? <BookDetail book={book} /> : <span>Loading book...</span>} */}
+    <div style={styles.container}>
+      <nav style={styles.navbar}>
+        <Link style={styles.link} to="/books">
+          Books
+        </Link>
+        <Link style={styles.link} to="/playground">
+          Playground
+        </Link>
+      </nav>
+      <h1>Book Manager</h1>
+      <div style={styles.content}>
+        <Switch>
+          <Route path="/books" component={BooksPage} />
+          <Route path="/playground" component={PlaygroundPage} />
+          <Redirect to="/books" />
+        </Switch>
       </div>
-    </CounterProvider>
+    </div>
   );
 }
 
 export default App;
+
+const styles: Record<string, CSSProperties> = {
+  container: {
+    width: '100%',
+  },
+  navbar: {
+    width: '100%',
+    borderBottom: '1px solid silver',
+    backgroundColor: 'blue',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginRight: 20,
+    gap: 20,
+    color: 'white',
+    padding: 20,
+    position: 'sticky',
+    top: 0,
+  },
+  link: {
+    color: 'white',
+  },
+  content: {
+    padding: 20,
+  },
+};
